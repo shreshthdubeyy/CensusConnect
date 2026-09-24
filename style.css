@@ -405,6 +405,47 @@ a:hover {
   border-bottom: 1px dashed var(--border-light);
 }
 
+/* Questionnaire Subsection Dividers */
+.form-section-divider {
+  display: flex;
+  align-items: center;
+  margin: 18px 0 12px 0;
+  position: relative;
+}
+
+.form-section-divider::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--border-light);
+  z-index: 1;
+}
+
+.form-section-pill {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 12px;
+  border-radius: 14px;
+  background: var(--bg-surface);
+  color: var(--text-muted);
+  border: 1px solid var(--border-light);
+}
+
+.form-section-pill i {
+  width: 13px;
+  height: 13px;
+  color: var(--color-primary);
+}
+
 .makaan-title {
   font-size: 0.95rem;
   font-weight: 700;
@@ -501,6 +542,16 @@ a:hover {
 
 .form-input::placeholder {
   color: var(--text-light);
+}
+
+.form-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 38px !important;
+  cursor: pointer;
 }
 
 /* Specific styling for numerical inputs */

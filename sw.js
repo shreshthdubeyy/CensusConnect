@@ -1,4 +1,4 @@
-const CACHE_NAME = 'census-connect-v3';
+const CACHE_NAME = 'census-connect-v5';
 const ASSETS = [
   'index.html',
   'style.css',

@@ -2,8 +2,8 @@
 // CENSUSCONNECT - STATE MANAGEMENT & GLOBAL CONFIG
 // ==========================================================================
 
-// Secured direct Google Apps Script Web App Endpoint URL
-const API_URL = "https://script.google.com/macros/s/AKfycbyf2VOpYhOvVaMeUSI405NbxIMNsT3dwJVGlEXZjoaa0fE895DupTyWsk86cVSSfhrc/exec";
+// Secured direct Google Apps Script Web App Endpoint URL (configured by user or runs in Demo Sandbox)
+const API_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
 
 // ==========================================================================
 // DUAL-LANGUAGE (ENGLISH & HINDI) INTERNATIONALIZATION (i18n)
@@ -13,7 +13,7 @@ const I18N = {
     app_title: "CensusConnect",
     field_survey_ops: "Field Survey Operations",
     login_subtitle: "Sign in to access the field registry",
-    lbl_username: "Username",
+    lbl_username: "Operator ID",
     ph_username: "Enter Username",
     lbl_password: "Password",
     ph_password: "Enter password",
@@ -22,30 +22,50 @@ const I18N = {
     btn_demo_sandbox: "Try Demo Mode",
     live_production: "Cloud Sync Live",
     portfolio_sandbox: "Portfolio Sandbox (Demo Data)",
+    
+    // Navigation Tabs
     nav_new_entry: "New Entry",
     nav_search_edit: "Search & Edit",
-    btn_lock: "Lock",
-    title_add_bhavan: "Add New Building",
-    lbl_bhavan_auto: "Building No. (Auto-Generated)",
-    lbl_non_residential: "Non-Residential Structure",
-    lbl_household_unit: "Household Unit",
+    
+    // View Titles
+    title_add_bhavan: "Field Survey & Demographic Data Entry",
+    title_search_edit: "Search & Edit Records",
+    
+    // Questionnaire Section Headers
+    lbl_sec_mapping: "Section 1: Household Mapping & Structure",
+    lbl_sec_demographics: "Section 2: Demographic Profile",
+    lbl_sec_socio_economic: "Section 3: Socio-Economic & Livelihood",
+    lbl_sec_amenities: "Section 4: Household Amenities & Observations",
+    
+    // Questionnaire Fields
+    lbl_structure_type: "Structure / House Type",
+    lbl_ownership: "Ownership Status",
     lbl_head_name: "Head of Household Name",
     ph_head_name: "Enter full name",
     lbl_mobile: "Mobile Number",
     ph_mobile: "10-digit mobile number",
     lbl_members_count: "Family Members Count",
     ph_members_count: "e.g. 4",
+    lbl_social_category: "Community Category",
+    lbl_livelihood: "Primary Livelihood / Occupation",
     lbl_se_id: "Socio-Economic ID (Optional)",
-    ph_se_id: "Enter SE ID (Optional)",
-    lbl_remarks: "Remarks",
-    ph_remarks: "Add optional remarks",
+    ph_se_id: "e.g. SE-1024",
+    lbl_welfare_scheme: "Social Welfare Scheme",
+    lbl_water_source: "Drinking Water Source",
+    lbl_sanitation: "Sanitation & Cooking Fuel",
+    lbl_remarks: "Field Remarks",
+    ph_remarks: "Enter survey observations",
+    
+    btn_lock: "Lock",
+    lbl_bhavan_auto: "Building No. (Auto-Generated)",
+    lbl_non_residential: "Non-Residential Structure",
+    lbl_household_unit: "Household Unit",
     btn_remove: "Remove",
     btn_restore: "Restore Family",
     btn_delete: "Delete",
     btn_add_makaan: "Add Household / Family",
     btn_submit_bhavan: "Submit Building Details",
-    title_search_edit: "Search & Edit Records",
-    ph_search: "Search by Building ID, Name, or Mobile...",
+    ph_search: "Search by Building ID, Name, Mobile, or SE-ID...",
     btn_search: "Search",
     lbl_found_records: "Found matching records",
     btn_clear: "Clear",
@@ -53,8 +73,8 @@ const I18N = {
     lbl_families_in_bhavan: "Families in Building",
     btn_add_makaan_edit: "Add Household under this Building",
     btn_save_updates: "Save Updates",
-    title_search_placeholder: "Find Records in the Registry",
-    desc_search_placeholder: "Search by Building ID (e.g. CN-0001), Head of Household, or Mobile Number to view and edit entries.",
+    title_search_placeholder: "Search Demographic & Socio-Economic Registry",
+    desc_search_placeholder: "Query by Building ID (e.g. CN-0001), Head of Household, Mobile Number, or Socio-Economic ID to inspect and update records.",
     bhavan_badge_label: "Building",
     makaan_badge_label: "Household",
     members_badge_label: "Members",
@@ -73,30 +93,50 @@ const I18N = {
     btn_demo_sandbox: "डेमो मोड आज़माएं (तुरंत प्रवेश)",
     live_production: "क्लाउड सिंक लाइव",
     portfolio_sandbox: "पोर्टफोलियो सैंडबॉक्स (डेमो डेटा)",
+    
+    // Navigation Tabs
     nav_new_entry: "नई प्रविष्टि",
     nav_search_edit: "खोजें और संपादित करें",
-    btn_lock: "लॉक करें",
-    title_add_bhavan: "नया भवन जोड़ें",
-    lbl_bhavan_auto: "भवन संख्या (स्वतः उत्पन्न)",
-    lbl_non_residential: "गैर-आवासीय संरचना",
-    lbl_household_unit: "मकान / परिवार इकाई",
+    
+    // View Titles
+    title_add_bhavan: "क्षेत्रीय सर्वेक्षण एवं जनसांख्यिकी डेटा प्रविष्टि",
+    title_search_edit: "रिकॉर्ड खोजें और संपादित करें",
+    
+    // Questionnaire Section Headers
+    lbl_sec_mapping: "भाग 1: मकान व संरचना मैपिंग",
+    lbl_sec_demographics: "भाग 2: जनसांख्यिकी प्रोफाइल",
+    lbl_sec_socio_economic: "भाग 3: सामाजिक-आर्थिक व आजीविका",
+    lbl_sec_amenities: "भाग 4: घरेलू सुविधाएं एवं टिप्पणी",
+    
+    // Questionnaire Fields
+    lbl_structure_type: "संरचना / मकान का प्रकार",
+    lbl_ownership: "स्वामित्व की स्थिति",
     lbl_head_name: "मुखिया का नाम",
     ph_head_name: "पूरा नाम दर्ज करें",
     lbl_mobile: "मोबाइल नंबर",
     ph_mobile: "10 अंकों का मोबाइल नंबर",
     lbl_members_count: "परिवार के सदस्यों की संख्या",
     ph_members_count: "उदा. 4",
+    lbl_social_category: "सामाजिक श्रेणी",
+    lbl_livelihood: "मुख्य आजीविका / व्यवसाय",
     lbl_se_id: "सामाजिक-आर्थिक आईडी (वैकल्पिक)",
-    ph_se_id: "एसई आईडी दर्ज करें (वैकल्पिक)",
-    lbl_remarks: "टिप्पणी",
-    ph_remarks: "अतिरिक्त टिप्पणी जोड़ें",
+    ph_se_id: "उदा. SE-1024",
+    lbl_welfare_scheme: "कल्याणकारी योजना नामांकन",
+    lbl_water_source: "पेयजल स्रोत",
+    lbl_sanitation: "शौचालय व रसोई ईंधन",
+    lbl_remarks: "क्षेत्रीय टिप्पणी",
+    ph_remarks: "सर्वेक्षण अवलोकन दर्ज करें",
+    
+    btn_lock: "लॉक करें",
+    lbl_bhavan_auto: "भवन संख्या (स्वतः उत्पन्न)",
+    lbl_non_residential: "गैर-आवासीय संरचना",
+    lbl_household_unit: "मकान / परिवार इकाई",
     btn_remove: "हटाएं",
     btn_restore: "पुनर्स्थापित करें",
     btn_delete: "हटाएं",
     btn_add_makaan: "मकान / परिवार जोड़ें",
     btn_submit_bhavan: "भवन विवरण दर्ज करें",
-    title_search_edit: "रिकॉर्ड खोजें और संपादित करें",
-    ph_search: "भवन आईडी, नाम या मोबाइल से खोजें...",
+    ph_search: "भवन आईडी, नाम, मोबाइल या एसई आईडी से खोजें...",
     btn_search: "खोजें",
     lbl_found_records: "मिले हुए रिकॉर्ड्स",
     btn_clear: "साफ़ करें",
@@ -104,8 +144,8 @@ const I18N = {
     lbl_families_in_bhavan: "भवन में कुल परिवार",
     btn_add_makaan_edit: "इस भवन में मकान जोड़ें",
     btn_save_updates: "अपडेट सुरक्षित करें",
-    title_search_placeholder: "रजिस्ट्री में रिकॉर्ड खोजें",
-    desc_search_placeholder: "भवन आईडी (उदा. CN-0001), मुखिया के नाम, या मोबाइल नंबर से खोजें।",
+    title_search_placeholder: "जनसांख्यिकी एवं सामाजिक-आर्थिक रजिस्ट्री खोजें",
+    desc_search_placeholder: "भवन आईडी (उदा. CN-0001), मुखिया के नाम, मोबाइल नंबर या एसई आईडी से खोजें।",
     bhavan_badge_label: "भवन",
     makaan_badge_label: "मकान",
     members_badge_label: "सदस्य",
@@ -446,14 +486,23 @@ function handleLogout() {
 function switchView(viewName) {
   state.currentView = viewName;
   
-  document.getElementById('tab-new-entry').classList.toggle('active', viewName === 'new-entry');
-  document.getElementById('tab-search-edit').classList.toggle('active', viewName === 'search-edit');
+  const tabNew = document.getElementById('tab-new-entry');
+  const tabSearch = document.getElementById('tab-search-edit');
+
+  const viewNew = document.getElementById('view-new-entry');
+  const viewSearch = document.getElementById('view-search-edit');
+
+  if (tabNew) tabNew.classList.toggle('active', viewName === 'new-entry');
+  if (tabSearch) tabSearch.classList.toggle('active', viewName === 'search-edit');
   
-  document.getElementById('view-new-entry').classList.toggle('active', viewName === 'new-entry');
-  document.getElementById('view-search-edit').classList.toggle('active', viewName === 'search-edit');
+  if (viewNew) viewNew.classList.toggle('active', viewName === 'new-entry');
+  if (viewSearch) viewSearch.classList.toggle('active', viewName === 'search-edit');
   
   if (viewName === 'search-edit') {
-    setTimeout(() => document.getElementById('search-bhavan-query').focus(), 150);
+    setTimeout(() => {
+      const q = document.getElementById('search-bhavan-query');
+      if (q) q.focus();
+    }, 150);
   }
 }
 
@@ -546,32 +595,134 @@ function addMakaanBlock(initialData = null) {
           <i data-lucide="trash-2"></i> ${t('btn_remove')}
         </button>
       </div>
+
+      <input type="hidden" class="makaan-number-hidden-input" name="makaanId">
       
-      <div class="makaan-grid">
-        <input type="hidden" class="makaan-number-hidden-input" name="makaanId">
-        
+      <!-- QUESTIONNAIRE SECTION 1: HOUSEHOLD MAPPING & STRUCTURE -->
+      <div class="form-section-divider">
+        <span class="form-section-pill"><i data-lucide="map-pin"></i> ${t('lbl_sec_mapping')}</span>
+      </div>
+      <div class="makaan-grid" style="margin-bottom: 8px;">
+        <div class="input-container">
+          <label class="input-label">${t('lbl_structure_type')}</label>
+          <select name="structureType" class="form-input form-select">
+            <option value="Pucca / Concrete">Pucca (Concrete / Permanent)</option>
+            <option value="Semi-Pucca">Semi-Pucca (Tiled / Brick)</option>
+            <option value="Kutcha / Temporary">Kutcha (Temporary / Thatched)</option>
+            <option value="Independent House">Independent Residence</option>
+            <option value="Apartment / Multi-Unit">Apartment / Multi-Unit</option>
+          </select>
+        </div>
+        <div class="input-container">
+          <label class="input-label">${t('lbl_ownership')}</label>
+          <select name="ownershipStatus" class="form-input form-select">
+            <option value="Owned">Owned</option>
+            <option value="Rented">Rented / Tenancy</option>
+            <option value="Provided / Institutional">Institutional / Employer Provided</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- QUESTIONNAIRE SECTION 2: DEMOGRAPHIC PROFILE -->
+      <div class="form-section-divider">
+        <span class="form-section-pill"><i data-lucide="users"></i> ${t('lbl_sec_demographics')}</span>
+      </div>
+      <div class="makaan-grid" style="margin-bottom: 8px;">
         <!-- Head of Household -->
         <div class="input-container">
-          <label class="input-label">${t('lbl_head_name')} <span>*</span></label>
+          <label class="input-label">${t('lbl_head_name')} <span class="req-star">*</span></label>
           <input type="text" name="mukhiyaNaam" class="form-input" placeholder="${t('ph_head_name')}" required autocapitalize="words" autocomplete="name" oninput="validateField(this)">
         </div>
         
         <!-- Mobile Number -->
         <div class="input-container">
-          <label class="input-label">${t('lbl_mobile')} <span>*</span></label>
+          <label class="input-label">${t('lbl_mobile')} <span class="req-star">*</span></label>
           <input type="tel" name="mobileNo" class="form-input" placeholder="${t('ph_mobile')}" required maxlength="10" inputmode="numeric" pattern="[0-9]{10}" oninput="formatMobileNumber(this); validateField(this);">
         </div>
         
         <!-- Family Members Count -->
         <div class="input-container">
-          <label class="input-label">${t('lbl_members_count')} <span>*</span></label>
+          <label class="input-label">${t('lbl_members_count')} <span class="req-star">*</span></label>
           <input type="number" name="membersCount" class="form-input" placeholder="${t('ph_members_count')}" required min="1" max="50" inputmode="numeric" oninput="validateField(this)">
         </div>
-        
+
+        <!-- Social Community Group -->
+        <div class="input-container">
+          <label class="input-label">${t('lbl_social_category')}</label>
+          <select name="socialCategory" class="form-input form-select">
+            <option value="General">General Category</option>
+            <option value="OBC">OBC (Other Backward Class)</option>
+            <option value="SC">SC (Scheduled Caste)</option>
+            <option value="ST">ST (Scheduled Tribe)</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- QUESTIONNAIRE SECTION 3: SOCIO-ECONOMIC & LIVELIHOOD -->
+      <div class="form-section-divider">
+        <span class="form-section-pill"><i data-lucide="briefcase"></i> ${t('lbl_sec_socio_economic')}</span>
+      </div>
+      <div class="makaan-grid" style="margin-bottom: 8px;">
+        <!-- Primary Livelihood -->
+        <div class="input-container">
+          <label class="input-label">${t('lbl_livelihood')}</label>
+          <select name="primaryLivelihood" class="form-input form-select">
+            <option value="Salaried / Private">Salaried / Private Sector</option>
+            <option value="Government Service">Government / Public Sector</option>
+            <option value="Self-Employed / Business">Self-Employed / Business / Trade</option>
+            <option value="Agriculture / Farming">Agriculture / Farming / Dairy</option>
+            <option value="Daily Wage / Labor">Daily Wage / Contract Labor</option>
+            <option value="Retired / Pensioner">Retired / Pensioner</option>
+            <option value="Other">Other / Independent</option>
+          </select>
+        </div>
+
         <!-- Socio-Economic ID -->
         <div class="input-container">
           <label class="input-label">${t('lbl_se_id')}</label>
           <input type="text" name="seId" class="form-input" placeholder="${t('ph_se_id')}" autocapitalize="characters" autocomplete="off" autocorrect="off">
+        </div>
+
+        <!-- Welfare Scheme Enrollment -->
+        <div class="input-container span-2">
+          <label class="input-label">${t('lbl_welfare_scheme')}</label>
+          <select name="welfareScheme" class="form-input form-select">
+            <option value="National Food Security / Ration">National Food Security / Ration Card</option>
+            <option value="Health Insurance Scheme">Health Insurance Scheme (Ayushman / State)</option>
+            <option value="Housing Assistance Scheme">Housing Assistance (PMAY / Urban)</option>
+            <option value="Multiple Schemes">Multiple Social Schemes</option>
+            <option value="None / Not Enrolled">None / Not Enrolled</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- QUESTIONNAIRE SECTION 4: LIVING AMENITIES & FIELD REMARKS -->
+      <div class="form-section-divider">
+        <span class="form-section-pill"><i data-lucide="sparkles"></i> ${t('lbl_sec_amenities')}</span>
+      </div>
+      <div class="makaan-grid">
+        <!-- Drinking Water -->
+        <div class="input-container">
+          <label class="input-label">${t('lbl_water_source')}</label>
+          <select name="waterSource" class="form-input form-select">
+            <option value="Piped Tap Water">Piped Tap Water (Treated)</option>
+            <option value="Borewell / Tube Well">Borewell / Tube Well</option>
+            <option value="Public Supply / Tanker">Public Community Supply</option>
+            <option value="Other">Other Source</option>
+          </select>
+        </div>
+
+        <!-- Sanitation & Fuel -->
+        <div class="input-container">
+          <label class="input-label">${t('lbl_sanitation')}</label>
+          <select name="sanitationFuel" class="form-input form-select">
+            <option value="Individual Flush Toilet + LPG">Individual Flush Toilet & LPG</option>
+            <option value="Individual Toilet + Electricity">Individual Toilet & Electric Stove</option>
+            <option value="Shared / Community Toilet">Shared / Community Facility</option>
+            <option value="Other">Other</option>
+          </select>
         </div>
         
         <!-- Remarks -->
@@ -730,6 +881,7 @@ async function handleNewSubmit(event) {
       });
       
       saveSandboxData(sandboxRecords);
+      refreshDemographicKPIs();
       showToast("Saved to Sandbox", `Created Building ${currentBhavanId} with ${entries.length} record(s).`, "success");
       resetNewForm();
       fetchNextIdState();
@@ -769,6 +921,7 @@ async function handleNewSubmit(event) {
       showToast("Sync Successful", `Created Building ${data.bhavanId} with ${entries.length} records.`, "success");
       resetNewForm();
       fetchNextIdState();
+      refreshDemographicKPIs();
     } else {
       throw new Error(data.error || "Backend failed to write row");
     }
@@ -1245,31 +1398,133 @@ function renderEditMakaanCard(makaan, index, container) {
         }
       </div>
       
-      <div class="makaan-grid" style="${isDeleted ? 'pointer-events: none;' : ''}">
-        <input type="hidden" name="makaanId" value="${formattedMakaanId}">
-        
+      <input type="hidden" name="makaanId" value="${formattedMakaanId}">
+      
+      <!-- QUESTIONNAIRE SECTION 1: HOUSEHOLD MAPPING & STRUCTURE -->
+      <div class="form-section-divider">
+        <span class="form-section-pill"><i data-lucide="map-pin"></i> ${t('lbl_sec_mapping')}</span>
+      </div>
+      <div class="makaan-grid" style="margin-bottom: 8px; ${isDeleted ? 'pointer-events: none;' : ''}">
+        <div class="input-container">
+          <label class="input-label">${t('lbl_structure_type')}</label>
+          <select name="structureType" class="form-input form-select">
+            <option value="Pucca / Concrete">Pucca (Concrete / Permanent)</option>
+            <option value="Semi-Pucca">Semi-Pucca (Tiled / Brick)</option>
+            <option value="Kutcha / Temporary">Kutcha (Temporary / Thatched)</option>
+            <option value="Independent House">Independent Residence</option>
+            <option value="Apartment / Multi-Unit">Apartment / Multi-Unit</option>
+          </select>
+        </div>
+        <div class="input-container">
+          <label class="input-label">${t('lbl_ownership')}</label>
+          <select name="ownershipStatus" class="form-input form-select">
+            <option value="Owned">Owned</option>
+            <option value="Rented">Rented / Tenancy</option>
+            <option value="Provided / Institutional">Institutional / Employer Provided</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- QUESTIONNAIRE SECTION 2: DEMOGRAPHIC PROFILE -->
+      <div class="form-section-divider">
+        <span class="form-section-pill"><i data-lucide="users"></i> ${t('lbl_sec_demographics')}</span>
+      </div>
+      <div class="makaan-grid" style="margin-bottom: 8px; ${isDeleted ? 'pointer-events: none;' : ''}">
         <!-- Head of Household -->
         <div class="input-container">
-          <label class="input-label">${t('lbl_head_name')} <span>*</span></label>
+          <label class="input-label">${t('lbl_head_name')} <span class="req-star">*</span></label>
           <input type="text" name="mukhiyaNaam" class="form-input" placeholder="${t('ph_head_name')}" required value="${makaan.mukhiyaNaam || ''}" autocapitalize="words" autocomplete="name" oninput="validateField(this)">
         </div>
         
         <!-- Mobile Number -->
         <div class="input-container">
-          <label class="input-label">${t('lbl_mobile')} <span>*</span></label>
+          <label class="input-label">${t('lbl_mobile')} <span class="req-star">*</span></label>
           <input type="tel" name="mobileNo" class="form-input" placeholder="${t('ph_mobile')}" required value="${makaan.mobileNo || ''}" maxlength="10" inputmode="numeric" pattern="[0-9]{10}" oninput="formatMobileNumber(this); validateField(this);">
         </div>
         
         <!-- Family Members Count -->
         <div class="input-container">
-          <label class="input-label">${t('lbl_members_count')} <span>*</span></label>
+          <label class="input-label">${t('lbl_members_count')} <span class="req-star">*</span></label>
           <input type="number" name="membersCount" class="form-input" placeholder="${t('ph_members_count')}" required min="1" max="50" inputmode="numeric" value="${makaan.membersCount || ''}" oninput="validateField(this)">
         </div>
-        
+
+        <!-- Social Community Group -->
+        <div class="input-container">
+          <label class="input-label">${t('lbl_social_category')}</label>
+          <select name="socialCategory" class="form-input form-select">
+            <option value="General">General Category</option>
+            <option value="OBC">OBC (Other Backward Class)</option>
+            <option value="SC">SC (Scheduled Caste)</option>
+            <option value="ST">ST (Scheduled Tribe)</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- QUESTIONNAIRE SECTION 3: SOCIO-ECONOMIC & LIVELIHOOD -->
+      <div class="form-section-divider">
+        <span class="form-section-pill"><i data-lucide="briefcase"></i> ${t('lbl_sec_socio_economic')}</span>
+      </div>
+      <div class="makaan-grid" style="margin-bottom: 8px; ${isDeleted ? 'pointer-events: none;' : ''}">
+        <!-- Primary Livelihood -->
+        <div class="input-container">
+          <label class="input-label">${t('lbl_livelihood')}</label>
+          <select name="primaryLivelihood" class="form-input form-select">
+            <option value="Salaried / Private">Salaried / Private Sector</option>
+            <option value="Government Service">Government / Public Sector</option>
+            <option value="Self-Employed / Business">Self-Employed / Business / Trade</option>
+            <option value="Agriculture / Farming">Agriculture / Farming / Dairy</option>
+            <option value="Daily Wage / Labor">Daily Wage / Contract Labor</option>
+            <option value="Retired / Pensioner">Retired / Pensioner</option>
+            <option value="Other">Other / Independent</option>
+          </select>
+        </div>
+
         <!-- Socio-Economic ID -->
         <div class="input-container">
           <label class="input-label">${t('lbl_se_id')}</label>
           <input type="text" name="seId" class="form-input" placeholder="${t('ph_se_id')}" value="${makaan.seId || ''}" autocapitalize="characters" autocomplete="off" autocorrect="off">
+        </div>
+
+        <!-- Welfare Scheme Enrollment -->
+        <div class="input-container span-2">
+          <label class="input-label">${t('lbl_welfare_scheme')}</label>
+          <select name="welfareScheme" class="form-input form-select">
+            <option value="National Food Security / Ration">National Food Security / Ration Card</option>
+            <option value="Health Insurance Scheme">Health Insurance Scheme (Ayushman / State)</option>
+            <option value="Housing Assistance Scheme">Housing Assistance (PMAY / Urban)</option>
+            <option value="Multiple Schemes">Multiple Social Schemes</option>
+            <option value="None / Not Enrolled">None / Not Enrolled</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- QUESTIONNAIRE SECTION 4: LIVING AMENITIES & FIELD REMARKS -->
+      <div class="form-section-divider">
+        <span class="form-section-pill"><i data-lucide="sparkles"></i> ${t('lbl_sec_amenities')}</span>
+      </div>
+      <div class="makaan-grid" style="${isDeleted ? 'pointer-events: none;' : ''}">
+        <!-- Drinking Water -->
+        <div class="input-container">
+          <label class="input-label">${t('lbl_water_source')}</label>
+          <select name="waterSource" class="form-input form-select">
+            <option value="Piped Tap Water">Piped Tap Water (Treated)</option>
+            <option value="Borewell / Tube Well">Borewell / Tube Well</option>
+            <option value="Public Supply / Tanker">Public Community Supply</option>
+            <option value="Other">Other Source</option>
+          </select>
+        </div>
+
+        <!-- Sanitation & Fuel -->
+        <div class="input-container">
+          <label class="input-label">${t('lbl_sanitation')}</label>
+          <select name="sanitationFuel" class="form-input form-select">
+            <option value="Individual Flush Toilet + LPG">Individual Flush Toilet & LPG</option>
+            <option value="Individual Toilet + Electricity">Individual Toilet & Electric Stove</option>
+            <option value="Shared / Community Toilet">Shared / Community Facility</option>
+            <option value="Other">Other</option>
+          </select>
         </div>
         
         <!-- Remarks -->
@@ -1434,6 +1689,7 @@ async function handleEditSubmit(event) {
       });
       
       saveSandboxData(sandboxRecords);
+      refreshDemographicKPIs();
       showToast("Updates Saved", `Updated Building ${state.searchQuery} in Sandbox.`, "success");
       loadBhavanForEditing(state.searchQuery);
       fetchNextIdState();
@@ -1474,6 +1730,7 @@ async function handleEditSubmit(event) {
       showToast("Sync Successful", `Successfully updated Building ${state.searchQuery} in Google Sheets.`, "success");
       performBhavanSearch();
       fetchNextIdState();
+      refreshDemographicKPIs();
     } else {
       throw new Error(data.error || "Save failed on server");
     }

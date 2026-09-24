@@ -121,11 +121,11 @@
     <!-- MAIN APP WORKSPACE -->
     <main class="app-container">
 
-      <!-- VIEW 1: NEW ENTRY VIEW -->
+      <!-- VIEW 1: FIELD DEMOGRAPHIC DATA ENTRY VIEW -->
       <section id="view-new-entry" class="view-panel active">
         <div class="card">
           <div class="card-title-bar">
-            <h2 class="card-title"><i data-lucide="plus-circle" style="color: var(--color-primary)"></i> <span data-i18n="title_add_bhavan">Add New Building</span></h2>
+            <h2 class="card-title"><i data-lucide="plus-circle" style="color: var(--color-primary)"></i> <span data-i18n="title_add_bhavan">Field Survey & Demographic Data Entry</span></h2>
           </div>
 
           <form id="new-bhavan-form" onsubmit="handleNewSubmit(event)">
@@ -146,9 +146,9 @@
               </div>
             </div>
 
-            <!-- Household Blocks Container -->
+            <!-- Household Questionnaire Blocks Container -->
             <div id="makaan-blocks-container" class="form-group-list">
-              <!-- Dynamic Household blocks inserted by JS -->
+              <!-- Dynamic Household Questionnaire blocks inserted by JS -->
             </div>
 
             <!-- Action Buttons -->
@@ -164,7 +164,7 @@
         </div>
       </section>
 
-      <!-- VIEW 2: SEARCH & EDIT VIEW -->
+      <!-- VIEW 2: SEARCH & EDIT REGISTRY VIEW -->
       <section id="view-search-edit" class="view-panel">
         <div class="card">
           <div class="card-title-bar">
@@ -175,7 +175,7 @@
           <div class="search-bar-container">
             <div class="search-input-wrapper">
               <i data-lucide="search" class="search-icon-inside"></i>
-              <input type="text" id="search-bhavan-query" class="form-input search-input" placeholder="Search by Building ID, Name, or Mobile..." data-i18n-ph="ph_search" onkeypress="handleSearchKeyPress(event)">
+              <input type="text" id="search-bhavan-query" class="form-input search-input" placeholder="Search by Building ID, Name, Mobile, or SE-ID..." data-i18n-ph="ph_search" onkeypress="handleSearchKeyPress(event)">
             </div>
             <button type="button" class="btn btn-primary search-btn" onclick="performBhavanSearch()" id="search-btn">
               <i data-lucide="search"></i> <span data-i18n="btn_search">Search</span>
@@ -243,9 +243,9 @@
           <!-- No Results / Initial Search State -->
           <div class="no-results" id="search-placeholder">
             <i data-lucide="search" class="no-results-icon"></i>
-            <h3 data-i18n="title_search_placeholder">Find Records in the Registry</h3>
-            <p style="color: var(--text-light); max-width: 420px; margin: 8px auto 0 auto; font-size: 0.9rem;" data-i18n="desc_search_placeholder">
-              Search by Building ID (e.g. CN-0001), Head of Household, or Mobile Number to view and edit entries.
+            <h3 data-i18n="title_search_placeholder">Search Demographic & Socio-Economic Registry</h3>
+            <p style="color: var(--text-light); max-width: 440px; margin: 8px auto 0 auto; font-size: 0.9rem;" data-i18n="desc_search_placeholder">
+              Query by Building ID (e.g. CN-0001), Head of Household, Mobile Number, or Socio-Economic ID to inspect and update records.
             </p>
           </div>
         </div>

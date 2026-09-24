@@ -21,47 +21,6 @@
 ## 📌 Overview
 
 **CensusConnect** is an operational survey suite built for field enumerators, statistical surveyors, and municipal administrators. Designed specifically for mobile field workflows and low-connectivity environments, it streamlines the capture of hierarchical building structures, household units, demographic indicators, socio-economic classifications, and living amenity access.
-
----
-
-## 📋 Comprehensive 4-Part Survey Questionnaire
-
-Each household unit (`Makaan`) is structured into four distinct questionnaire modules:
-
-```text
-Physical Structure [Building No: CN-0001]
-  ├── Unit 0001
-  │     ├── [Section 1] Structure: Pucca | Ownership: Owned
-  │     ├── [Section 2] Head: Aarav Sharma | Mobile: 9876500001 | Members: 4 | Category: General
-  │     ├── [Section 3] Livelihood: Private Sector | SE-ID: SE-1024 | Scheme: Health Insurance
-  │     └── [Section 4] Water: Piped Tap | Sanitation: Flush Toilet + LPG | Remarks: Permanent Resident
-  └── Unit 0002
-        ├── [Section 1] Structure: Pucca | Ownership: Rented
-        ├── [Section 2] Head: Rohan Sharma | Mobile: 9876500002 | Members: 3 | Category: OBC
-        ├── [Section 3] Livelihood: Self-Employed | SE-ID: SE-1025 | Scheme: Food Security / Ration
-        └── [Section 4] Water: Piped Tap | Sanitation: Flush Toilet + LPG | Remarks: Tenant
-```
-
-### 1. 📍 Section 1: Household Mapping & Structure
-- **Structure / House Type**: Classification across *Pucca (Concrete / Permanent)*, *Semi-Pucca (Tiled / Brick)*, *Kutcha (Temporary)*, *Independent House*, and *Apartment / Multi-Unit*.
-- **Ownership Status**: Categorized by *Owned*, *Rented / Tenancy*, *Institutional / Provided*, or *Other*.
-
-### 2. 👤 Section 2: Demographic Profile
-- **Head of Household**: Full legal name with title capitalization.
-- **Mobile Contact**: 10-digit numeric validation with auto-formatting.
-- **Family Members Count**: Numeric family size index (`1 - 50`).
-- **Community Group**: Classification (*General*, *OBC*, *SC*, *ST*, *Other*).
-
-### 3. 💼 Section 3: Socio-Economic & Livelihood Registry
-- **Primary Source of Income**: *Salaried / Private*, *Government Service*, *Self-Employed / Business*, *Agriculture / Farming*, *Daily Wage / Labor*, *Retired / Pensioner*.
-- **Socio-Economic ID (SE-ID)**: Alphanumeric tracking for welfare scheme eligibility (e.g. `SE-1024`).
-- **Social Welfare Scheme Enrollment**: *National Food Security / Ration*, *Health Insurance (Ayushman / State)*, *Housing Assistance (PMAY)*, *Multiple Schemes*, or *None*.
-
-### 4. 🏠 Section 4: Household Amenities & Field Observations
-- **Drinking Water Source**: *Piped Tap Water (Treated)*, *Borewell / Tube Well*, *Public Supply / Tanker*, *Other*.
-- **Sanitation & Cooking Fuel**: *Individual Flush Toilet & LPG*, *Individual Toilet & Electric*, *Shared Facility*, *Other*.
-- **Field Observations**: Free-form qualitative notes by the field officer.
-
 ---
 
 ## 🔒 Dual-Mode Architecture

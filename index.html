@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CensusConnect — Socio-Economic Field Registry</title>
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- PWA Manifest & Mobile Settings -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CensusConnect">
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <link rel="apple-touch-icon" href="Logo.png">
+  <meta name="theme-color" content="#4f46e5">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       STANDARD LOGIN SCREEN
+       ========================================================================== -->
+  <div id="login-screen" class="login-overlay">
+    <div class="login-card">
+      <!-- Language Switcher in Corner -->
+      <button type="button" class="lang-toggle-btn login-corner-lang-btn" onclick="toggleLanguage()" title="Switch Language / भाषा बदलें">
+        <i data-lucide="languages" style="width: 14px; height: 14px;"></i>
+        <span id="login-lang-toggle-text">हिन्दी</span>
+      </button>
+
+      <div class="login-logo-block">
+        <img src="logo.svg" alt="CensusConnect Logo" class="login-logo-img" onerror="this.src='Logo.png'">
+        <h2 class="login-app-title">CensusConnect</h2>
+      </div>
+      <p class="login-subtitle" data-i18n="login_subtitle">Sign in to access the field registry</p>
+      
+      <form id="login-form" onsubmit="handleLoginSubmit(event)">
+        <!-- Operator ID / Username -->
+        <div class="input-container" style="margin-bottom: 16px; text-align: left;">
+          <label for="login-username" class="input-label"><span data-i18n="lbl_username">Username</span><span class="req-star">*</span></label>
+          <div class="password-field-wrapper">
+            <i data-lucide="user" class="password-field-icon"></i>
+            <input type="text" id="login-username" class="form-input password-input" placeholder="e.g. op_01" required autocomplete="username" data-i18n-ph="ph_username">
+          </div>
+        </div>
+
+        <!-- Password with Show/Hide Toggle -->
+        <div class="input-container password-input-container" style="margin-bottom: 22px; text-align: left;">
+          <label for="login-password" class="input-label"><span data-i18n="lbl_password">Password</span><span class="req-star">*</span></label>
+          <div class="password-field-wrapper">
+            <i data-lucide="lock" class="password-field-icon"></i>
+            <input type="password" id="login-password" class="form-input password-input" placeholder="Enter password" required autocomplete="current-password" data-i18n-ph="ph_password">
+            <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('login-password', this)" title="Show/Hide password" tabindex="-1">
+              <i data-lucide="eye" class="toggle-icon"></i>
+            </button>
+          </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" style="width: 100%;">
+          <i data-lucide="log-in"></i> <span data-i18n="btn_sign_in">Sign In</span>
+        </button>
+
+        <div class="auth-divider">
+          <span data-i18n="auth_or_divider">or explore as guest</span>
+        </div>
+
+        <button type="button" class="btn btn-demo-mode" onclick="launchSandboxMode()" style="width: 100%;">
+          <i data-lucide="sparkles" style="width: 16px; height: 16px;"></i> <span data-i18n="btn_demo_sandbox">Try Demo Mode (Instant Access)</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MAIN APP LAYOUT (Authenticated Workspace)
+       ========================================================================== -->
+  <div id="main-app-layout" style="display: none;">
+    
+    <!-- HEADER & NAVIGATION -->
+    <header class="main-header">
+      <div class="header-container">
+        <div class="logo-block">
+          <img src="logo.svg" alt="CensusConnect Logo" class="logo-img" style="border-radius: 8px;" onerror="this.src='Logo.png'">
+          <div style="display: flex; flex-direction: column; align-items: flex-start;">
+            <span class="app-title">CensusConnect</span>
+            <span class="live-pill" id="header-status-pill" style="font-size: 0.65rem; padding: 2px 8px; margin-top: 1px;">
+              <span class="pulse-dot" style="width: 6px; height: 6px;"></span> Cloud Sync Live
+            </span>
+          </div>
+        </div>
+        
+        <nav class="nav-tabs">
+          <button class="tab-btn active" id="tab-new-entry" onclick="switchView('new-entry')">
+            <i data-lucide="clipboard-signature"></i> <span data-i18n="nav_new_entry">New Entry</span>
+          </button>
+          <button class="tab-btn" id="tab-search-edit" onclick="switchView('search-edit')">
+            <i data-lucide="search-code"></i> <span data-i18n="nav_search_edit">Search & Edit</span>
+          </button>
+        </nav>
+
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <!-- Dual-Language Toggle (English / Hindi) -->
+          <button type="button" class="lang-toggle-btn" onclick="toggleLanguage()" title="Switch Language / भाषा बदलें">
+            <i data-lucide="languages" style="width: 15px; height: 15px;"></i>
+            <span id="lang-toggle-text">हिन्दी</span>
+          </button>
+
+          <!-- Lock App Session button -->
+          <button class="logout-btn" onclick="handleLogout()" title="Lock Application" style="background-color: var(--color-error-light); padding: 8px 14px; border-radius: 20px; display: flex; align-items: center; gap: 6px; border: none;">
+            <i data-lucide="lock" style="width: 16px; height: 16px; color: var(--color-error);"></i> 
+            <span style="font-size: 0.85rem; font-weight: 700; color: var(--color-error);" data-i18n="btn_lock">Lock</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN APP WORKSPACE -->
+    <main class="app-container">
+
+      <!-- VIEW 1: NEW ENTRY VIEW -->
+      <section id="view-new-entry" class="view-panel active">
+        <div class="card">
+          <div class="card-title-bar">
+            <h2 class="card-title"><i data-lucide="plus-circle" style="color: var(--color-primary)"></i> <span data-i18n="title_add_bhavan">Add New Building</span></h2>
+          </div>
+
+          <form id="new-bhavan-form" onsubmit="handleNewSubmit(event)">
+            <!-- Building Summary Block -->
+            <div class="form-header-summary">
+              <div class="bhavan-display">
+                <span class="bhavan-label" data-i18n="lbl_bhavan_auto">Building No. (Auto-Generated)</span>
+                <span class="bhavan-value" id="new-bhavan-id">CN-XXXX</span>
+              </div>
+              
+              <!-- Non-Residential Toggle -->
+              <div class="gair-avasiya-wrapper" style="text-align: right; width: auto; flex-grow: 0;">
+                <label class="toggle-switch-label">
+                  <input type="checkbox" id="new-gair-avasiya" onchange="toggleNewGairAvasiya(this)">
+                  <span class="toggle-switch-slider"></span>
+                  <span class="toggle-switch-text" data-i18n="lbl_non_residential">Non-Residential Structure</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Household Blocks Container -->
+            <div id="makaan-blocks-container" class="form-group-list">
+              <!-- Dynamic Household blocks inserted by JS -->
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="btn-group">
+              <button type="button" class="btn btn-outline" onclick="addMakaanBlock()">
+                <i data-lucide="plus"></i> <span data-i18n="btn_add_makaan">Add Household / Family</span>
+              </button>
+              <button type="submit" class="btn btn-primary" id="submit-new-btn">
+                <i data-lucide="save"></i> <span data-i18n="btn_submit_bhavan">Submit Building Details</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- VIEW 2: SEARCH & EDIT VIEW -->
+      <section id="view-search-edit" class="view-panel">
+        <div class="card">
+          <div class="card-title-bar">
+            <h2 class="card-title"><i data-lucide="file-edit" style="color: var(--color-secondary)"></i> <span data-i18n="title_search_edit">Search & Edit Records</span></h2>
+          </div>
+
+          <!-- Search Bar -->
+          <div class="search-bar-container">
+            <div class="search-input-wrapper">
+              <i data-lucide="search" class="search-icon-inside"></i>
+              <input type="text" id="search-bhavan-query" class="form-input search-input" placeholder="Search by Building ID, Name, or Mobile..." data-i18n-ph="ph_search" onkeypress="handleSearchKeyPress(event)">
+            </div>
+            <button type="button" class="btn btn-primary search-btn" onclick="performBhavanSearch()" id="search-btn">
+              <i data-lucide="search"></i> <span data-i18n="btn_search">Search</span>
+            </button>
+          </div>
+
+          <!-- Skeleton Loading State -->
+          <div class="skeleton-loader" id="search-skeleton">
+            <div class="skeleton-row" style="width: 40%; margin-bottom: 20px;"></div>
+            <div class="skeleton-card"></div>
+          </div>
+
+          <!-- Search Results List -->
+          <div id="search-results-container" style="display: none; margin-bottom: 24px;">
+            <div class="search-results-header">
+              <span class="results-count-label"><i data-lucide="info" style="width: 16px; height: 16px;"></i> <span data-i18n="lbl_found_records">Found matching records</span>: <strong id="search-results-count">0</strong></span>
+              <button type="button" class="btn btn-outline" onclick="clearSearchResults()" style="min-height: 28px; height: 28px; font-size: 0.8rem; padding: 0 12px; border-radius: 14px; border-color: var(--text-light); color: var(--text-light); flex-grow: 0; width: auto;">
+                <span data-i18n="btn_clear">Clear</span>
+              </button>
+            </div>
+            <div id="search-results-list" class="search-results-list-cards">
+              <!-- Dynamic search result cards inserted here -->
+            </div>
+          </div>
+
+          <!-- Edit Form Area -->
+          <form id="edit-bhavan-form" style="display: none;" onsubmit="handleEditSubmit(event)">
+            <div class="form-header-summary" style="background-color: hsl(195, 80%, 95%); border-left-color: var(--color-secondary);">
+              <div class="bhavan-display">
+                <span class="bhavan-label" data-i18n="lbl_editing_bhavan">Editing Building No.</span>
+                <span class="bhavan-value" id="edit-bhavan-id" style="color: var(--color-secondary);">CN-XXXX</span>
+              </div>
+              
+              <!-- Non-Residential Toggle Edit -->
+              <div class="gair-avasiya-wrapper">
+                <label class="toggle-switch-label">
+                  <input type="checkbox" id="edit-gair-avasiya" onchange="toggleEditGairAvasiya(this)">
+                  <span class="toggle-switch-slider secondary"></span>
+                  <span class="toggle-switch-text" style="color: var(--color-secondary);" data-i18n="lbl_non_residential">Non-Residential Structure</span>
+                </label>
+              </div>
+              
+              <div class="edit-families-count-wrapper" style="text-align: right;">
+                <span class="bhavan-label" style="display: block;" data-i18n="lbl_families_in_bhavan">Families in Building</span>
+                <span class="bhavan-value" id="edit-families-count" style="font-size: 1.2rem; opacity: 0.9; color: var(--color-secondary);">0</span>
+              </div>
+            </div>
+
+            <!-- Makaans list in edit mode -->
+            <div id="edit-makaan-blocks-container" class="form-group-list">
+              <!-- Dynamic editable Makaan cards inserted here -->
+            </div>
+
+            <!-- Edit Actions -->
+            <div class="btn-group">
+              <button type="button" class="btn btn-outline" onclick="addMakaanToEdit()" style="border-color: var(--color-secondary); color: var(--color-secondary);">
+                <i data-lucide="plus"></i> <span data-i18n="btn_add_makaan_edit">Add Household under this Building</span>
+              </button>
+              <button type="submit" class="btn btn-primary" id="update-btn" style="background-color: var(--color-secondary); box-shadow: 0 4px 12px rgba(6, 182, 212, 0.25);">
+                <i data-lucide="check-circle"></i> <span data-i18n="btn_save_updates">Save Updates</span>
+              </button>
+            </div>
+          </form>
+
+          <!-- No Results / Initial Search State -->
+          <div class="no-results" id="search-placeholder">
+            <i data-lucide="search" class="no-results-icon"></i>
+            <h3 data-i18n="title_search_placeholder">Find Records in the Registry</h3>
+            <p style="color: var(--text-light); max-width: 420px; margin: 8px auto 0 auto; font-size: 0.9rem;" data-i18n="desc_search_placeholder">
+              Search by Building ID (e.g. CN-0001), Head of Household, or Mobile Number to view and edit entries.
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Application Script -->
+  <script src="app.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

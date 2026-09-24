@@ -1,0 +1,29 @@
+{
+  "name": "CensusConnect — Socio-Economic Field Registry",
+  "short_name": "CensusConnect",
+  "description": "Demographic Field Survey & Socio-Economic Registry System",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#4f46e5",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "Logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "Logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

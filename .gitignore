@@ -1,0 +1,10 @@
+# Google Sheets Apps Script Backend (Contains secret access credentials)
+Code.gs
+google_apps_script_instructions.md
+
+# Temporary and local IDE configurations
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.gemini/

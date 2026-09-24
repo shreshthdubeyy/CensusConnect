@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5" />
+      <stop offset="50%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#818cf8" />
+    </linearGradient>
+    <filter id="subtleShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#1e1b4b" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Base Rounded Container with Depth -->
+  <rect x="24" y="24" width="464" height="464" rx="112" fill="url(#bgGrad)" filter="url(#subtleShadow)" />
+  
+  <!-- Subtle Internal Highlight Ring -->
+  <rect x="25" y="25" width="462" height="462" rx="111" fill="none" stroke="url(#glowGrad)" stroke-width="3" />
+
+  <!-- Modern Demographic & Data Grid Abstract Emblem -->
+  <g transform="translate(256, 256)">
+    <!-- Central Data Pillar / Hub -->
+    <rect x="-16" y="-120" width="32" height="240" rx="16" fill="#ffffff" opacity="0.95" />
+    
+    <!-- Left Community Node / Pillar -->
+    <rect x="-80" y="-70" width="28" height="190" rx="14" fill="#ffffff" opacity="0.8" />
+    
+    <!-- Right Data Node / Pillar -->
+    <rect x="52" y="-95" width="28" height="215" rx="14" fill="#ffffff" opacity="0.8" />
+
+    <!-- Far Left Node -->
+    <rect x="-140" y="-20" width="24" height="140" rx="12" fill="#ffffff" opacity="0.6" />
+
+    <!-- Far Right Node -->
+    <rect x="116" y="-45" width="24" height="165" rx="12" fill="#ffffff" opacity="0.6" />
+
+    <!-- Connected Census Pulse Wave / Arch -->
+    <path d="M -140 30 Q -60 -130 0 -100 T 140 -20" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" opacity="0.9" />
+    
+    <!-- Top Central Node Beacon -->
+    <circle cx="0" cy="-100" r="18" fill="#38bdf8" stroke="#ffffff" stroke-width="5" />
+    <circle cx="-66" cy="-55" r="14" fill="#818cf8" stroke="#ffffff" stroke-width="4" />
+    <circle cx="66" cy="-80" r="15" fill="#38bdf8" stroke="#ffffff" stroke-width="4" />
+  </g>
+</svg>
